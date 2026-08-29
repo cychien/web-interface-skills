@@ -67,4 +67,4 @@ Use `padding-left` and `padding-right`, not `padding-inline`: insets are physica
 
 ## Implement with Tailwind
 
-Tailwind projects express this baseline as utilities. Read `safe-area/tailwind.md` first: the utilities do not exist until its stylesheet is in the project.
+If the project uses Tailwind, `safe-area/tailwind.md` replaces the CSS above. Read it first.

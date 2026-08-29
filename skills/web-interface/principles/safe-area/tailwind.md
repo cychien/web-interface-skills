@@ -20,5 +20,3 @@ Use `*-safe-or-<spacing>` for product UI; `*-safe` gives the raw inset. Both com
 <main   class="px-safe-or-4 md:px-safe-or-6 lg:px-safe-or-8">…</main>
 <footer class="pb-safe-or-4 px-safe-or-4 md:px-safe-or-6 lg:px-safe-or-8">…</footer>
 ```
-
-Normal `md:` and `lg:` variants apply. Full-height surfaces use `min-h-dvh`, which is unrelated to safe area.
