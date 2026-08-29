@@ -25,10 +25,6 @@ Each row maps to `principles/<Principle>.md`.
 
 | Principle | Read it when |
 | --- | --- |
-| _Nothing yet._ | |
+| `safe-area` | Important UI can reach a viewport edge - fixed or sticky headers, bottom bars, composers, edge-to-edge or full-screen layouts, PWAs and WebViews |
 
 Groups to file new entries under once the table needs headings: **layout and space**, **shape and depth**, **type and rhythm**, **states and interaction**, **motion**, **responsiveness and device**, **content and copy**. Add a group when three entries want one, not before.
-
----
-
-Adding a principle: see `CONTRIBUTING.md` at the repo root. A new row earns its place by being a trigger, not a title.

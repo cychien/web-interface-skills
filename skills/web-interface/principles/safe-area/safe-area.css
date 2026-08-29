@@ -1,0 +1,73 @@
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+@utility p-safe {
+  padding-top: var(--safe-top);
+  padding-right: var(--safe-right);
+  padding-bottom: var(--safe-bottom);
+  padding-left: var(--safe-left);
+}
+
+@utility px-safe {
+  padding-right: var(--safe-right);
+  padding-left: var(--safe-left);
+}
+
+@utility py-safe {
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+@utility pt-safe { padding-top: var(--safe-top); }
+@utility pr-safe { padding-right: var(--safe-right); }
+@utility pb-safe { padding-bottom: var(--safe-bottom); }
+@utility pl-safe { padding-left: var(--safe-left); }
+
+@utility pt-safe-or-* {
+  padding-top: max(var(--safe-top), --spacing(--value(number)));
+  padding-top: max(var(--safe-top), --value([length]));
+}
+
+@utility pr-safe-or-* {
+  padding-right: max(var(--safe-right), --spacing(--value(number)));
+  padding-right: max(var(--safe-right), --value([length]));
+}
+
+@utility pb-safe-or-* {
+  padding-bottom: max(var(--safe-bottom), --spacing(--value(number)));
+  padding-bottom: max(var(--safe-bottom), --value([length]));
+}
+
+@utility pl-safe-or-* {
+  padding-left: max(var(--safe-left), --spacing(--value(number)));
+  padding-left: max(var(--safe-left), --value([length]));
+}
+
+@utility px-safe-or-* {
+  padding-right: max(var(--safe-right), --spacing(--value(number)));
+  padding-right: max(var(--safe-right), --value([length]));
+  padding-left: max(var(--safe-left), --spacing(--value(number)));
+  padding-left: max(var(--safe-left), --value([length]));
+}
+
+@utility py-safe-or-* {
+  padding-top: max(var(--safe-top), --spacing(--value(number)));
+  padding-top: max(var(--safe-top), --value([length]));
+  padding-bottom: max(var(--safe-bottom), --spacing(--value(number)));
+  padding-bottom: max(var(--safe-bottom), --value([length]));
+}
+
+@utility p-safe-or-* {
+  padding-top: max(var(--safe-top), --spacing(--value(number)));
+  padding-top: max(var(--safe-top), --value([length]));
+  padding-right: max(var(--safe-right), --spacing(--value(number)));
+  padding-right: max(var(--safe-right), --value([length]));
+  padding-bottom: max(var(--safe-bottom), --spacing(--value(number)));
+  padding-bottom: max(var(--safe-bottom), --value([length]));
+  padding-left: max(var(--safe-left), --spacing(--value(number)));
+  padding-left: max(var(--safe-left), --value([length]));
+}
