@@ -10,15 +10,13 @@ Each principle here turns one of those constraints into a rule an agent applies 
 
 ## Install
 
-Any agent that reads `SKILL.md` - Claude Code, Cursor, Codex:
-
 ```
-npx degit cychien/web-interface-skills/skills/web-interface .claude/skills/web-interface
+npx skills add cychien/web-interface-skills
 ```
 
-Swap the destination for wherever your tool keeps skills, or use `~/.claude/skills/web-interface` to install it globally.
+Installs into whichever agents it detects - Claude Code, Cursor, Codex, and others. Add `-g` for user-level instead of project-level, or `-a '*'` to install for every agent it finds.
 
-As a Claude Code plugin, so it updates with `/plugin`:
+Claude Code can also take it as a plugin, which keeps it updated through `/plugin`:
 
 ```
 /plugin marketplace add cychien/web-interface-skills
