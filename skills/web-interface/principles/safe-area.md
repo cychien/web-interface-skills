@@ -19,12 +19,20 @@ Ship this on every page shell.
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
 
-  --page-x: clamp(16px, 3vw, 32px);
-  --page-y: clamp(12px, 2vw, 24px);
+  --page-x: 16px;
+  --page-y: 16px;
+}
+
+@media (min-width: 48rem) {
+  :root { --page-x: 24px; --page-y: 20px; }
+}
+
+@media (min-width: 80rem) {
+  :root { --page-x: 32px; --page-y: 24px; }
 }
 
 .header,
-.container,
+.main,
 .footer {
   padding-left: max(var(--page-x), var(--safe-left));
   padding-right: max(var(--page-x), var(--safe-right));
@@ -39,6 +47,8 @@ Ship this on every page shell.
   margin-inline: auto;
 }
 ```
+
+`--page-x` and `--page-y` are the project's page spacing tokens; use its own scale and breakpoints where it has them.
 
 Use `padding-left` and `padding-right`, not `padding-inline`: insets are physical edges, and `padding-inline` swaps them in RTL.
 
