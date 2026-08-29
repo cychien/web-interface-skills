@@ -1,0 +1,14 @@
+{
+  "name": "design-craft",
+  "owner": {
+    "name": "Justin Chien",
+    "url": "https://github.com/cychien"
+  },
+  "plugins": [
+    {
+      "name": "design-craft",
+      "source": "./",
+      "description": "Design engineering principles that turn a working UI into a well-crafted one."
+    }
+  ]
+}
