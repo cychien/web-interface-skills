@@ -1,18 +1,12 @@
 {
-  "name": "design-craft",
+  "name": "web-interface",
   "version": "0.1.0",
-  "description": "Design engineering principles that turn a working UI into a well-crafted one.",
+  "description": "Design engineering principles for building and reviewing web interfaces.",
   "author": {
     "name": "Justin Chien",
     "url": "https://github.com/cychien"
   },
-  "repository": "https://github.com/cychien/design-craft",
+  "repository": "https://github.com/cychien/web-interface",
   "license": "MIT",
-  "keywords": [
-    "design-engineering",
-    "product-design",
-    "ui",
-    "frontend",
-    "craft"
-  ]
+  "keywords": ["design-engineering", "product-design", "ui", "frontend", "css", "craft"]
 }

@@ -1,14 +1,14 @@
 {
-  "name": "design-craft",
+  "name": "web-interface",
   "owner": {
     "name": "Justin Chien",
     "url": "https://github.com/cychien"
   },
   "plugins": [
     {
-      "name": "design-craft",
+      "name": "web-interface",
       "source": "./",
-      "description": "Design engineering principles that turn a working UI into a well-crafted one."
+      "description": "Design engineering principles for building and reviewing web interfaces."
     }
   ]
 }
