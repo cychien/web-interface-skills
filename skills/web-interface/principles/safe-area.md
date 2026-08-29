@@ -6,17 +6,18 @@
 
 `env(safe-area-inset-*)` is `0` on most screens and non-zero only where system UI intrudes. Adding it to your spacing makes every other device drift away from the design for no reason. `max()` keeps the inset invisible until it is actually needed. Additive is correct only when the design explicitly asks for clearance *beyond* the system UI.
 
-## When it applies
+## Scope
 
-Only when important UI can reach a viewport edge:
+The baseline below is the default for any web interface, not an opt-in. Because it composes with `max()`, the insets are `0` and completely invisible on screens that have none, so there is no cost to shipping it on a page that turns out not to need it. A page shell without it is one device away from a bug you will not see locally.
+
+What is *not* default is reaching for insets beyond the shell. They belong only where UI genuinely meets an edge:
 
 - edge-to-edge layouts, full-screen pages, app shells
-- headers at the top edge; bottom nav, action bars, composers, footers at the bottom edge
-- fixed or sticky edge controls
-- full-width content in landscape, where the left/right insets are the non-zero ones
+- fixed or sticky edge controls; bottom nav, action bars, composers
+- full-width content in landscape, where the left and right insets are the non-zero ones
 - PWAs and hybrid WebViews where content sits under system UI
 
-A centered article or marketing page with generous margins usually needs none of this. Do not apply safe-area padding by default.
+Everything inside the shell - cards, buttons, list rows, decorative backgrounds - never touches an inset. Do not sprinkle safe-area padding through a component tree.
 
 ## Setup
 
@@ -80,7 +81,7 @@ Responsive spacing and safe area answer different questions - what rhythm the de
 }
 ```
 
-That is the whole default for a typical responsive site. Two things it depends on:
+That is the whole baseline. Two things it depends on:
 
 - **Physical properties, not logical ones.** Insets describe physical screen edges. `padding-inline: A B` maps to start/end, so in RTL it puts the left inset on the right edge. Use `padding-left` / `padding-right` for anything combined with an inset.
 - **Safe area does not replace a width constraint.** `max-width` plus `margin-inline: auto` still does the centering; the insets only protect the mobile edges.
@@ -122,7 +123,7 @@ In WKWebView, Android WebView, Capacitor, Cordova, or React Native WebView, pick
 
 ## Review checklist
 
-- [ ] Some important UI actually reaches a viewport edge. If not, none of this is needed.
+- [ ] Page shell carries the baseline: header, container, and footer compose spacing with insets.
 - [ ] `viewport-fit=cover` present, zoom not disabled.
 - [ ] Insets centralized as tokens with platform-neutral names.
 - [ ] `max(design spacing, inset)`, not addition.

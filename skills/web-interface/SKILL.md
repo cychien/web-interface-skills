@@ -9,4 +9,4 @@ Read `principles/<name>.md` only for the rows whose trigger matches what you are
 
 | Principle | Read it when |
 | --- | --- |
-| `safe-area` | Important UI can reach a viewport edge - fixed or sticky headers, bottom bars, composers, edge-to-edge or full-screen layouts, PWAs and WebViews |
+| `safe-area` | **Always.** Every page shell needs the baseline; edge-to-edge layouts, fixed headers, bottom bars, composers, PWAs and WebViews need the rest of it |
