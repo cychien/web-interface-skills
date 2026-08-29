@@ -1,8 +1,8 @@
 # Safe area
 
-Modern OS and browser UI reserves space at the screen edges: status bar, notch, home indicator, gesture bar, address bar. A web interface respects that space and keeps its content and controls out of it.
+Modern OS and browser UI reserves space at the screen edges: status bar, notch, home indicator, gesture bar, address bar. Keep content and controls out of it.
 
-Insets report how much is reserved on each edge. They are a minimum the device demands, not spacing, so compose with `max(spacing, inset)`, never `spacing + inset`.
+Insets report how much each edge reserves. They are a minimum, not spacing: compose with `max(spacing, inset)`, never `spacing + inset`.
 
 ## Baseline
 
@@ -54,17 +54,17 @@ Ship this on every page shell.
 }
 ```
 
-`--page-x` and `--page-y` are the project's page spacing tokens; use its own scale and breakpoints where it has them.
+Use the project's own spacing scale and breakpoints where it has them.
 
 Use `padding-left` and `padding-right`, not `padding-inline`: insets are physical edges, and `padding-inline` swaps them in RTL.
 
 ## Placement
 
-- The component that owns an edge owns that edge's inset: header top, footer or composer bottom, edge-to-edge containers left and right.
-- Backgrounds, blur, and full-bleed media run to the screen edge and take no inset.
-- Cards, buttons, list rows, and everything else inside the shell take no inset.
-- Landscape moves the insets to left and right, so handle those wherever content runs full width.
+- The component touching an edge owns that inset: header top, footer or composer bottom, edge-to-edge containers left and right.
+- Backgrounds and full-bleed media run to the edge, no inset.
+- Nothing inside the shell takes an inset.
+- Landscape moves insets to left and right: handle those wherever content runs full width.
 
 ## Implement with Tailwind
 
-If the project uses Tailwind CSS, express the baseline as utilities instead of the CSS above. Read `safe-area/tailwind.md` before writing any classes: it defines the `*-safe` and `*-safe-or-*` utilities the project needs and ships the stylesheet to copy in.
+Tailwind projects express this baseline as utilities. Read `safe-area/tailwind.md` first: the utilities do not exist until its stylesheet is in the project.
