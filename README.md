@@ -4,9 +4,9 @@ Design engineering principles for the web, as an agent skill.
 
 ## Why use it
 
-A UI that works on your laptop is not a UI that holds up on a real device. Interfaces break in the places nobody opens during development: under the home indicator, in landscape with a notch, in RTL, inside a WebView, on a screen with no insets at all.
+Well-crafted interfaces come from a small set of decisions made correctly and consistently. This skill hands your agent those decisions as rules it applies while it builds.
 
-Each principle here turns one of those constraints into a rule an agent applies while it builds, instead of a bug someone finds afterwards. You get interfaces that stay robust across devices and stay comfortable for the people using them, without having to review for the same details every time.
+The result is UI that is robust across devices, browsers, and orientations, and that feels considered to the people using it - by default, on the first pass, without a review round.
 
 ## Install
 
