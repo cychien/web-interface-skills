@@ -1,6 +1,8 @@
 # Safe area
 
-Insets are a minimum the device demands, not spacing. Compose with `max(spacing, inset)`, never `spacing + inset`.
+Modern OS and browser UI reserves space at the screen edges: status bar, notch, home indicator, gesture bar, address bar. A web interface respects that space and keeps its content and controls out of it.
+
+Insets report how much is reserved on each edge. They are a minimum the device demands, not spacing, so compose with `max(spacing, inset)`, never `spacing + inset`.
 
 ## Baseline
 
