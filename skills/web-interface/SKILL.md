@@ -1,6 +1,6 @@
 ---
 name: web-interface
-description: Design engineering principles for building and reviewing web interfaces - layout, shape, spacing, typography, interaction states, motion, responsiveness, and the browser details that separate a working UI from a crafted one. Use when implementing or restyling a component, page, or layout, when reviewing UI for polish, or when asked how a specific visual or interaction detail should be handled.
+description: Design engineering principles that separate a working web UI from a crafted one. Use whenever building a web interface - any component, page, or layout.
 ---
 
 # Web Interface
