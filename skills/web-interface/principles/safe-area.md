@@ -14,21 +14,27 @@ Ship this on every page shell.
 
 ```css
 :root {
+  --page-x: 16px;
+  --page-y: 16px;
+
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
-
-  --page-x: 16px;
-  --page-y: 16px;
 }
 
-@media (min-width: 48rem) {
-  :root { --page-x: 24px; --page-y: 20px; }
+@media (min-width: 768px) {
+  :root {
+    --page-x: 24px;
+    --page-y: 20px;
+  }
 }
 
-@media (min-width: 80rem) {
-  :root { --page-x: 32px; --page-y: 24px; }
+@media (min-width: 1280px) {
+  :root {
+    --page-x: 32px;
+    --page-y: 24px;
+  }
 }
 
 .header,
@@ -59,15 +65,6 @@ Use `padding-left` and `padding-right`, not `padding-inline`: insets are physica
 - Cards, buttons, list rows, and everything else inside the shell take no inset.
 - Landscape moves the insets to left and right, so handle those wherever content runs full width.
 
-## Do not add
+## Implement with Tailwind
 
-- Keyboard handling. Let the browser scroll the focused field into view. Add `VisualViewport` logic only after reproducing a visible failure.
-- Branches on iOS version, device model, or browser brand.
-- `constant()`. `env()` with a `0px` fallback is enough.
-- `user-scalable=no` or `maximum-scale=1`.
-- `dvh` as part of safe area. It sizes the viewport; use `min-height: 100dvh` only where a surface fills the screen.
-- A second inset owner in hybrid WebViews (Capacitor, Cordova, React Native WebView). Native or CSS, not both.
-
-## Tailwind
-
-Read `safe-area/tailwind.md`.
+If the project uses Tailwind CSS, express the baseline as utilities instead of the CSS above. Read `safe-area/tailwind.md` before writing any classes: it defines the `*-safe` and `*-safe-or-*` utilities the project needs and ships the stylesheet to copy in.
