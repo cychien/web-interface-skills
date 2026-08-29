@@ -1,33 +1,14 @@
 # Safe area
 
-**Rule:** safe-area insets are a *minimum the device demands*, not spacing. Compose them as `max(design-spacing, inset)`, never `design-spacing + inset`, and apply them on the component that owns the edge.
+Insets are a minimum the device demands, not spacing. Compose with `max(spacing, inset)`, never `spacing + inset`.
 
-## Why
+## Baseline
 
-`env(safe-area-inset-*)` is `0` on most screens and non-zero only where system UI intrudes. Adding it to your spacing makes every other device drift away from the design for no reason. `max()` keeps the inset invisible until it is actually needed. Additive is correct only when the design explicitly asks for clearance *beyond* the system UI.
-
-## Scope
-
-The baseline below is the default for any web interface, not an opt-in. Because it composes with `max()`, the insets are `0` and completely invisible on screens that have none, so there is no cost to shipping it on a page that turns out not to need it. A page shell without it is one device away from a bug you will not see locally.
-
-What is *not* default is reaching for insets beyond the shell. They belong only where UI genuinely meets an edge:
-
-- edge-to-edge layouts, full-screen pages, app shells
-- fixed or sticky edge controls; bottom nav, action bars, composers
-- full-width content in landscape, where the left and right insets are the non-zero ones
-- PWAs and hybrid WebViews where content sits under system UI
-
-Everything inside the shell - cards, buttons, list rows, decorative backgrounds - never touches an inset. Do not sprinkle safe-area padding through a component tree.
-
-## Setup
+Ship this on every page shell.
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 ```
-
-Without `viewport-fit=cover` every inset resolves to `0` and the rest of this page silently does nothing. Never disable zoom (`user-scalable=no`, `maximum-scale=1`) as a layout workaround.
-
-Define the insets once, with platform-neutral names. Not `--notch-*`, `--iphone-*`, `--ios-*`:
 
 ```css
 :root {
@@ -35,31 +16,7 @@ Define the insets once, with platform-neutral names. Not `--notch-*`, `--iphone-
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
-}
-```
 
-Always pass the `0px` fallback. Do not add `constant()` unless the project genuinely still supports iOS 11.0 to 11.2.
-
-## Ownership
-
-The component that touches an edge owns that edge's inset: header owns top, footer or composer owns bottom, edge-to-edge containers own left and right. Backgrounds own nothing and stay full-bleed.
-
-```
-┌────────────────────────────┐
-│████████████████████████████│   background, blur, media: full-bleed
-│██    text, controls     ███│   content: inside safe bounds
-│████████████████████████████│
-└────────────────────────────┘
-```
-
-Do not pad the page root with all four insets. That is correct only when the entire UI is deliberately confined to the safe rectangle, and it drags backgrounds and full-bleed media off the screen edges.
-
-## Baseline
-
-Responsive spacing and safe area answer different questions - what rhythm the design wants at this width, versus what the device requires - and `max()` combines them without double-padding.
-
-```css
-:root {
   --page-x: clamp(16px, 3vw, 32px);
   --page-y: clamp(12px, 2vw, 24px);
 }
@@ -81,60 +38,24 @@ Responsive spacing and safe area answer different questions - what rhythm the de
 }
 ```
 
-That is the whole baseline. Two things it depends on:
+Use `padding-left` and `padding-right`, not `padding-inline`: insets are physical edges, and `padding-inline` swaps them in RTL.
 
-- **Physical properties, not logical ones.** Insets describe physical screen edges. `padding-inline: A B` maps to start/end, so in RTL it puts the left inset on the right edge. Use `padding-left` / `padding-right` for anything combined with an inset.
-- **Safe area does not replace a width constraint.** `max-width` plus `margin-inline: auto` still does the centering; the insets only protect the mobile edges.
+## Placement
 
-Breakpoint tokens instead of `clamp()` are equally valid. Pick whichever the design system already uses.
+- The component that owns an edge owns that edge's inset: header top, footer or composer bottom, edge-to-edge containers left and right.
+- Backgrounds, blur, and full-bleed media run to the screen edge and take no inset.
+- Cards, buttons, list rows, and everything else inside the shell take no inset.
+- Landscape moves the insets to left and right, so handle those wherever content runs full width.
 
-## Viewport height is a separate concern
+## Do not add
 
-`dvh` sizes a surface against the dynamic viewport and has nothing to do with insets. Use it only where a component genuinely fills the screen, never on ordinary long-form pages:
-
-```css
-.fullscreen {
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-```
-
-## Do not patch what is not broken
-
-Order of preference: normal flow and responsive CSS, then `env()` insets, then `dvh`/`svh` when height is actually the problem, and only last a minimal runtime workaround.
-
-**Keyboard: do nothing by default.** For ordinary forms, search, checkout, and settings, let the browser reveal the focused field and scroll it into view. Do not infer keyboard state from focus, do not attach `VisualViewport` listeners preemptively, and do not zero the bottom inset because an input has focus.
-
-Add keyboard handling only after reproducing a user-visible failure: a gap between a bottom composer and the keyboard, a control covered or unusable, the UI left displaced after dismissal, flicker caused by a resize handler, or blank space the user can scroll into. Viewport numbers that merely look odd while the UI renders correctly are not a failure.
-
-**No sniffing.** Do not branch on iOS version, device model, or browser brand. Fix reproduced behaviour, and prefer capability detection.
-
-## Hybrid apps
-
-In WKWebView, Android WebView, Capacitor, Cordova, or React Native WebView, pick one owner for system insets: native padding or web CSS, never both. Two layers applying the same inset is the most common cause of doubled bottom padding.
-
-## Failure modes
-
-- A primary button under the home indicator, where the gesture bar swallows the tap.
-- Doubled bottom padding, because native and web both applied the inset, or a parent and a child both did.
-- Spacing that looks cramped on a device with no insets, because the code used `spacing + inset`.
-- A background stopping short of the screen edge, leaving a strip of page behind a supposedly full-bleed hero.
-- Landscape content tucked into the notch cutout, because only top and bottom were handled.
-
-## Review checklist
-
-- [ ] Page shell carries the baseline: header, container, and footer compose spacing with insets.
-- [ ] `viewport-fit=cover` present, zoom not disabled.
-- [ ] Insets centralized as tokens with platform-neutral names.
-- [ ] `max(design spacing, inset)`, not addition.
-- [ ] Applied on the edge-owning component, not the page root.
-- [ ] Backgrounds still reach the edges.
-- [ ] Left and right insets handled for landscape.
-- [ ] Physical padding properties used, so RTL does not swap the insets.
-- [ ] `dvh` only on genuinely full-height surfaces.
-- [ ] No keyboard or user-agent workaround without a reproduced, user-visible failure.
-- [ ] Hybrid apps: exactly one layer owns the insets.
+- Keyboard handling. Let the browser scroll the focused field into view. Add `VisualViewport` logic only after reproducing a visible failure.
+- Branches on iOS version, device model, or browser brand.
+- `constant()`. `env()` with a `0px` fallback is enough.
+- `user-scalable=no` or `maximum-scale=1`.
+- `dvh` as part of safe area. It sizes the viewport; use `min-height: 100dvh` only where a surface fills the screen.
+- A second inset owner in hybrid WebViews (Capacitor, Cordova, React Native WebView). Native or CSS, not both.
 
 ## Tailwind
 
-If the project uses Tailwind CSS, read `safe-area/tailwind.md`.
+Read `safe-area/tailwind.md`.

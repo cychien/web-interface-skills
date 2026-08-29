@@ -9,4 +9,4 @@ Read `principles/<name>.md` only for the rows whose trigger matches what you are
 
 | Principle | Read it when |
 | --- | --- |
-| `safe-area` | **Always.** Every page shell needs the baseline; edge-to-edge layouts, fixed headers, bottom bars, composers, PWAs and WebViews need the rest of it |
+| `safe-area` | **Always** for the page shell; also edge-to-edge layouts, fixed bars, composers, PWAs, WebViews |
